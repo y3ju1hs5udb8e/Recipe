@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:food_app/provider/food_provider.dart';
+import 'package:food_app/views/widgets/video_player.dart';
 
 class ResultPage extends ConsumerWidget {
   const ResultPage({super.key, required this.item});
@@ -13,15 +14,16 @@ class ResultPage extends ConsumerWidget {
     return Scaffold(
       body: data.when(
         data: (data) {
+          final link = data[0].strYoutube.split('=');
           return SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Image.network(
-                  data[0].strMealThumb,
-                  width: double.infinity,
-                  height: 400,
-                ),
+                Container(
+                    width: double.infinity,
+                    height: 400,
+                    margin: const EdgeInsets.only(bottom: 8.0),
+                    child: VideoPlayer(link: link[1])),
                 Container(
                   padding: const EdgeInsets.all(10),
                   margin: const EdgeInsets.symmetric(vertical: 10),
@@ -58,12 +60,12 @@ class ResultPage extends ConsumerWidget {
                     Text(
                       'A famous food from ${data[0].strArea}',
                       textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 20),
                     ),
                     Text(
                       'Tags: ${data[0].strTags}',
                       textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 20),
                     ),
                   ],
                 ),
